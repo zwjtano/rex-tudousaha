@@ -5,13 +5,16 @@
 新增 `list_type=new`，无 90 天或其他日期范围限制。国内、韩国、日本、欧美每区从 TMDB 获取最多 60 档热门候选，逐个读取 `last_episode_to_air.air_date`，按日期倒序后分页，每页 20 档。未知或未来日期排在最后，不用首播日期冒充更新日期。缓存 30 分钟，详情并发上限 4。不是 TMDB 全库的最新更新榜；首次加载会比原版慢。
 
 在 Rex 模块导入 JS：
-https://raw.githubusercontent.com/zwjtano/rex-tudousaha/v1.1.0/makka-variety-new.js
+https://raw.githubusercontent.com/zwjtano/rex-tudousaha/v1.1.2/makka-variety-new.js
 
 集合订阅：
-https://raw.githubusercontent.com/zwjtano/rex-tudousaha/v1.1.0/makka-collection.rex
+https://raw.githubusercontent.com/zwjtano/rex-tudousaha/v1.1.2/makka-collection.rex
 
 首页包使用 `makka-variety-home.rex`，仅替换原首页四个综艺栏，其他栏目不变。先安装模块，再导入首页包。
 
 已通过 JavaScript 语法检查、模拟 TMDB 的排序/分页/地区/缓存/失败重试测试、首页 ZIP 校验。尚未在 Rex 实机验证。
 
 TMDB 接口文档：https://developer.themoviedb.org/reference/discover-tv
+
+## v1.1.2 分季海报
+最近更新模式优先使用最近已播出一集所属季的海报，缺失时回退节目总海报。复用 TMDB 剧集详情中的 seasons，不增加请求。剧集四区保留 v1.1.1 的豆瓣最近更新榜。节目 ID 和首播日期保持不变。新增分季匹配、未来季排除、海报缺失及请求失败回退测试，均通过；Rex 可能自行覆盖或缓存海报，实际展示尚需设备验证。

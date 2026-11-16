@@ -4,7 +4,7 @@ var WidgetMetadata = {
   "title": "玛卡综艺 · 最近更新",
   "author": "MakkaPakka；修改：土豆萨哈",
   "description": "基于玛卡巴卡综艺频道；每区最多60档候选按最近一集日期排序，无天数限制。",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "requiredVersion": "0.0.1",
   "site": "https://github.com/zwjtano/rex-tudousaha",
   "modules": [
@@ -154,16 +154,23 @@ async function makkaRecentPool(region) {
     }
     var today = new Date().toISOString().slice(0,10), failures = 0;
     var items = await makkaMapLimit(candidates, async function(item){
-        var date = '';
+        var date = '', poster = item.poster_path || '';
         try {
             var detail = await Widget.tmdb.get('/tv/'+item.id,{params:{language:'zh-CN'}});
             var episode = detail && detail.last_episode_to_air;
-            if (episode && /^\d{4}-\d{2}-\d{2}$/.test(episode.air_date) && episode.air_date <= today) date=episode.air_date;
+            if (episode && /^\d{4}-\d{2}-\d{2}$/.test(episode.air_date) && episode.air_date <= today) {
+                date=episode.air_date;
+                // Match the aired episode, never the highest (possibly unaired) season.
+                if (Number.isInteger(episode.season_number) && episode.season_number >= 0 && Array.isArray(detail.seasons)) {
+                    var season = detail.seasons.find(function(s){return s.season_number === episode.season_number;});
+                    if (season && season.poster_path) poster = season.poster_path;
+                }
+            }
         } catch(e) { failures++; }
         return {id:String(item.id),tmdbId:Number(item.id),type:'tmdb',mediaType:'tv',title:item.name||item.title,
             genreTitle:'综艺',releaseDate:item.first_air_date||'',
             subTitle:date ? '更新 '+date : '更新日期未知',description:item.overview||'',
-            posterPath:item.poster_path?'https://image.tmdb.org/t/p/w500'+item.poster_path:'',
+            posterPath:poster?'https://image.tmdb.org/t/p/w500'+poster:'',
             backdropPath:item.backdrop_path?'https://image.tmdb.org/t/p/w780'+item.backdrop_path:'',
             _updated:date,_popularity:Number(item.popularity)||0};
     });
