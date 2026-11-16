@@ -1,4 +1,57 @@
-var WidgetMetadata={id:'tudousaha.variety.charts',title:'土豆萨哈 · 分区综艺榜',description:'骨朵国内榜与豆瓣海外榜，按TMDB国家信息分组。',author:'土豆萨哈',version:'1.0.0',requiredVersion:'0.0.1',modules:[{id:'countryCharts',title:'分区综艺榜',functionName:'countryCharts',type:'video',cacheDuration:1800,params:[{name:'region',title:'地区',type:'enumeration',value:'cn',enumOptions:[{title:'国内',value:'cn'},{title:'韩国',value:'kr'},{title:'日本',value:'jp'},{title:'欧美',value:'western'}]},{name:'page',title:'页码',type:'page',startPage:1}]}]};
+WidgetMetadata = {
+  "id": "tudousaha.variety.charts",
+  "title": "土豆萨哈 · 分区综艺榜",
+  "description": "骨朵国内榜与豆瓣海外榜，按TMDB国家信息分组。",
+  "author": "土豆萨哈",
+  "version": "1.0.1",
+  "requiredVersion": "0.0.1",
+  "modules": [
+    {
+      "id": "countryCharts",
+      "title": "分区综艺榜",
+      "functionName": "countryCharts",
+      "type": "video",
+      "cacheDuration": 1800,
+      "params": [
+        {
+          "name": "region",
+          "title": "地区",
+          "type": "enumeration",
+          "value": "cn",
+          "enumOptions": [
+            {
+              "title": "国内",
+              "value": "cn"
+            },
+            {
+              "title": "韩国",
+              "value": "kr"
+            },
+            {
+              "title": "日本",
+              "value": "jp"
+            },
+            {
+              "title": "欧美",
+              "value": "western"
+            }
+          ]
+        },
+        {
+          "name": "page",
+          "title": "页码",
+          "type": "page",
+          "startPage": 1
+        }
+      ],
+      "description": "国内使用骨朵热榜；海外按TMDB国家信息拆分豆瓣榜单，按更新日期排列。",
+      "requiresWebView": false
+    }
+  ],
+  "site": "https://github.com/zwjtano/rex-tudousaha",
+  "iconurl": "https://github.com/zwjtano.png"
+};
+
 var chartBase='https://raw.githubusercontent.com/MakkaPakka518/List/refs/heads/main/data/';
 var chartRegions={kr:['KR'],jp:['JP'],western:['US','CA','GB','FR','DE','IT','ES','SE','NO','DK','FI','NL','BE','CH','AT','IE','PT','PL','IS']};
 async function chartJson(file){var r=await Widget.http.get(chartBase+file);var d=r && r.data!==undefined?r.data:r;return typeof d==='string'?JSON.parse(d):d;}

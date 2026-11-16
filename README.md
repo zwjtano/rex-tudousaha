@@ -5,7 +5,7 @@
 ## 导入
 
 1. 在 Rex 模块管理中导入订阅链接：
-   https://raw.githubusercontent.com/zwjtano/rex-tudousaha/main/collection.rex
+   https://raw.githubusercontent.com/zwjtano/rex-tudousaha/main/manifest.json
 2. 从 Releases 下载 `tudousaha-home.rex`，导入首页配置。
 3. 配套首页其他栏目仍依赖玛卡巴卡合集：https://rex.778477.xyz/api/collections/untitled.rex
 
@@ -29,3 +29,7 @@
 榜单 JSON：https://github.com/MakkaPakka518/List/tree/main/data
 
 本仓库只发布自建分组模块和配置，不包含影视资源或第三方模块源码。
+
+## v1.0.1 兼容修正
+
+补齐订阅 icon、脚本 site 和模块 description；元数据使用展开的 WidgetMetadata 赋值格式。提供 manifest.json 订阅入口。尚需 Rex 实机确认。
